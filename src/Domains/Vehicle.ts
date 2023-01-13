@@ -1,5 +1,5 @@
 export default class Veihicle {
-  protected id: string | undefined;
+  readonly id: string | undefined;
   protected model: string;
   protected year: number;
   protected color: string;
@@ -22,9 +22,9 @@ export default class Veihicle {
     this.buyValue = buyValue;
   }
 
-  public setId(id: string) {
+  /* public setId(id: string) {
     this.id = id;
-  }
+  } */
 
   public getId() {
     return this.id;

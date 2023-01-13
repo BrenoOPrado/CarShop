@@ -12,4 +12,20 @@ export default class CarService {
       throw new Error('');
     }
   }
+
+  public async getAll() {
+    const model = new CarModel();
+    const cars = await model.find();
+    const carsArr = cars.map((car) =>
+      new Car(car));
+    return carsArr;
+  }
+
+  public async getById(id: string) {
+    const model = new CarModel();
+    const cars = await model.findById(id);
+    const [carsArr] = cars.map((car) => new Car(car))
+      .filter((car) => car.id === id); 
+    return carsArr;
+  }
 }
