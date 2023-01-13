@@ -28,4 +28,14 @@ export default class CarService {
       .filter((car) => car.id === id); 
     return carsArr;
   }
+
+  public async updateById(id: string, body: ICar) {
+    const model = new CarModel();
+    const cars = await model.update(id, body);
+    if (cars !== null) {
+      const [carsArr] = [cars].map((car) => new Car(car))
+        .filter((car) => car.id === id);
+      return carsArr;
+    }
+  }
 }

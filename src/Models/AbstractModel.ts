@@ -3,6 +3,8 @@ import {
   models,
   Schema,
   model,
+  isValidObjectId,
+  UpdateQuery,
 } from 'mongoose';
   
 export default abstract class AbstractModel<T> {  
@@ -18,5 +20,15 @@ export default abstract class AbstractModel<T> {
   
   public async create(obj: T): Promise<T> { 
     return this.model.create({ ...obj });
+  }
+
+  public async update(_id: string, obj: Partial<T>): Promise<T | null> {
+    if (!isValidObjectId(_id)) throw Error('Invalid Mongo id');
+
+    return this.model.findByIdAndUpdate(
+      { _id },
+      { ...obj } as UpdateQuery<T>,
+      { new: true },
+    );
   }
 }
