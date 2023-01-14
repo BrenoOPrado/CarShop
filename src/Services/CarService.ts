@@ -33,9 +33,7 @@ export default class CarService {
     const model = new CarModel();
     const cars = await model.update(id, body);
     if (cars !== null) {
-      const [carsArr] = [cars].map((car) => new Car(car))
-        .filter((car) => car.id === id);
-      return carsArr;
+      return new Car(cars);
     }
   }
 }
