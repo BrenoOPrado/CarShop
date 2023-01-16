@@ -129,10 +129,22 @@ describe('Testes das funcionalidaades de Cars', function () {
       seatsQty: 5,
     };
 
+    const carOutput = new Car({
+      id: '634852326b35b59438fbea2f',
+      model: 'Marea',
+      year: 2002,
+      color: 'Black',
+      status: true,
+      buyValue: 15.99,
+      doorsQty: 4,
+      seatsQty: 5,
+    });
+
     Sinon.stub(Model, 'update').resolves();
 
     try {
-      await service.updateById('WRONG ID', carInput);
+      const result = await service.updateById('WRONG ID', carInput);
+      expect(result).to.be.equal(carOutput);
     } catch (error) {
       expect((error as Error).message).to.be.equal('Invalid Mongo id');
     }

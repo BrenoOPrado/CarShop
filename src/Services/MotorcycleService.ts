@@ -4,13 +4,9 @@ import MotorcycleModel from '../Models/MotorcycleModel';
 
 export default class MotorcycleService {
   public async create(motorcycle: IMotorcycle) {
-    try {
-      const model = new MotorcycleModel();
-      const newMotorcycle = await model.create(motorcycle);
-      return new Motorcycle(newMotorcycle);
-    } catch (error) {
-      throw new Error('');
-    }
+    const model = new MotorcycleModel();
+    const newMotorcycle = await model.create(motorcycle);
+    return new Motorcycle(newMotorcycle);
   }
 
   public async getAll() {
