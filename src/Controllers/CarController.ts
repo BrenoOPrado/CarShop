@@ -8,6 +8,8 @@ export default class CarController {
   private res: Response;
   private next: NextFunction;
   private service: CarService;
+  private invalidId = 'Invalid mongo id';
+  private notFound = 'Car not found';
 
   constructor(req: Request, res: Response, next: NextFunction) {
     this.req = req;
@@ -44,10 +46,10 @@ export default class CarController {
     const { id } = this.req.params;
     if (!isValidObjectId(id)) {
       return this.res.status(422)
-        .json({ message: 'Invalid mongo id' });
+        .json({ message: this.invalidId });
     }
     const car = await this.service.getById(id);
-    if (!car) return this.res.status(404).json({ message: 'Car not found' });
+    if (!car) return this.res.status(404).json({ message: this.notFound });
     return this.res.status(200).json(car);
   }
 
@@ -55,15 +57,27 @@ export default class CarController {
     const { id } = this.req.params;
     if (!isValidObjectId(id)) {
       return this.res.status(422)
-        .json({ message: 'Invalid mongo id' });
+        .json({ message: this.invalidId });
     }
     const car = await this.service.getById(id);
-    if (!car) return this.res.status(404).json({ message: 'Car not found' });
+    if (!car) return this.res.status(404).json({ message: this.notFound });
     try {
       const result = await this.service.updateById(id, this.req.body);
       return this.res.status(200).json(result);
     } catch (error) {
       this.next(error);
     }
+  }
+
+  public async deleteById() {
+    const { id } = this.req.params;
+    if (!isValidObjectId(id)) {
+      return this.res.status(422)
+        .json({ message: this.invalidId });
+    }
+    const car = await this.service.getById(id);
+    if (!car) return this.res.status(404).json({ message: this.notFound });
+    await this.service.deleteById(id);
+    return this.res.status(204).json();
   }
 }

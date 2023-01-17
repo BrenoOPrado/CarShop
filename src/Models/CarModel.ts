@@ -23,4 +23,8 @@ export default class CarModel extends AbstractODM<ICar> {
   public async findById(id: string): Promise<ICar[]> {
     return this.model.find({ id });
   }
+
+  public async deleteById(id: string): Promise<void> {
+    this.model.deleteOne({ id });
+  }
 }
