@@ -9,7 +9,7 @@ export default class MotorcyclesController {
   private next: NextFunction;
   private service: MotorcycleService;
   private invalidId = 'Invalid mongo id';
-  private notFound = 'Car not found';
+  private notFound = 'Motorcycle not found';
 
   constructor(req: Request, res: Response, next: NextFunction) {
     this.req = req;
